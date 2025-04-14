@@ -23,21 +23,5 @@ Run the pip install requirements.txt to install and set up the app, including an
 #### Usage: 
 Just upload your resume in pdf format, and see for yourself :)
 
-
-##### Running the program
-
-1. Clone the repository to your local machine
-2. Navigate to the project directory
-3. Install all the required libraries (just run pip install -r /path/to/requirements.txt)
-4. Provide your Open AI API key in the .yaml file
-5. Run the following command to start the chatbot -
-
-    ```
-    python app.py
-    ```
-
-    ```
-    Go to: https://localhost:8000
-    ```
     
 Overall, the development of a resume parser app using Flask represents a significant advancement in leveraging technology to support job seekers in optimizing their resumes for the modern recruitment landscape. This app aligns with the increasing demand for efficient and technology-driven solutions in the job application process, ultimately benefiting both job seekers and recruiters.
