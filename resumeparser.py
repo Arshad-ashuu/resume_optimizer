@@ -74,7 +74,9 @@ You are given a resume. Your tasks are:
 
 1. **Evaluate the resume and give it a score out of 100**, based on clarity, completeness, relevance of information, formatting, and ATS-friendliness.
     - SCORE : 
-2. **List all mistakes found**
+2. **Extract the following information from the resume:**
+    - FULL_NAME
+3. **List all mistakes found**
 
     "Mistakes": 
     "line": "Full text of the line with mistake",
@@ -103,6 +105,9 @@ Give the extracted information in json format only
 
         json_text = json_match.group(0)
         parsed_data = json.loads(json_text)
+        # if 'SCORE' in parsed_data:
+        #     print("📦 ATS Match Score:", parsed_data['SCORE'])
+
         return parsed_data
 
     except (json.JSONDecodeError, AttributeError, ValueError, TypeError) as e:

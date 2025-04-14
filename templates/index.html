@@ -5,8 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Resume Parser</title>
-   
+    <style>
+        @keyframes fadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-up {
+          animation: fadeUp 0.8s ease-out forwards;
+        }
+        .delay-200 {
+          animation-delay: 0.2s;
+        }
+        </style>
+     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
 </head>
+
 <body>
     <div class="relative isolate overflow-hidden bg-gray-900">
         <svg class="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
@@ -23,16 +43,16 @@
             </svg>
             <rect width="100%" height="100%" stroke-width="0" fill="url(#983e3e4c-de6d-4c3f-8d64-b9761d1534cc)" />
         </svg>
-        <div class="absolute left-[calc(50%-4rem)] top-10 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]"
+        <div class="absolute left-[calc(50%-4rem)] top-8 -z-10 transform-gpu blur-3xl sm:left-[calc(50%-18rem)] lg:left-48 lg:top-[calc(50%-30rem)] xl:left-[calc(50%-24rem)]"
             aria-hidden="true">
             <div class="aspect-[1108/632] w-[69.25rem] bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-20"
                 style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)">
             </div>
         </div>
-        <div class="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
-            <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-8">
+        <div class="mx-auto max-w-7xl lg:-mt-20 px-6 pb-24 pt-6 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+            <div class="mx-auto max-w-2xl flex-shrink-0 lg:mx-0 lg:max-w-xl lg:pt-4">
                 <!-- <img class="h-11" src="https://res.cloudinary.com/dtsuvx8dz/image/upload/v1706986565/hqatxpsjdg3zeql20jfe.png" alt="Your Company"> -->
-                <div class="mt-24 sm:mt-32 lg:mt-16">
+                <div class="mt-16 sm:mt-32 lg:mt-12">
                     <a href="#" class="inline-flex space-x-6">
                         <span
                             class="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold leading-6 text-blue-400 ring-1 ring-inset ring-blue-500/20">What's
@@ -47,9 +67,21 @@
                         </span>
                     </a>
                 </div>
-                <h1 class="mt-10 text-4xl font-bold tracking-tight text-white sm:text-5xl">Revolutionize Your Recruitment with Next-Gen Resume Parsing</h1>
-                <p class="mt-6 text-lg leading-8 text-gray-300">Unlock the potential of every application with our advanced resume parser, designed to enhance the speed and accuracy of
-                your hiring decisions.</p>
+                
+                <h1 class="mt-8 text-4xl font-bold tracking-tight text-white sm:text-5xl animate-fade-up">
+                    Parse. Analyze. Optimize —Your AI-Powered <span class="flex ">Resume Assistant 
+                <dotlottie-player
+                src="https://lottie.host/c677c73e-8be3-4313-97e4-0ce31d93ed53/cuLEfUC3g4.lottie" 
+                background="transparent" speed="1" style="width: 64px; height: 64px;" loop autoplay></dotlottie-player>
+            </span>
+        </h1>
+                <p class="mt-6 text-lg leading-8 text-gray-300 max-w-2xl animate-fade-up delay-200">
+                
+                    Upload your resume to extract structured insights and ATS score — then supercharge it with smart suggestions by uploading a job description. Our AI recommends missing keywords to boost your match rate and stand out to recruiters.
+                </p>
+                
+                  
+                
                 <div class="mt-10 flex items-center gap-x-6">
                 <form action="/process" method="post" enctype="multipart/form-data">
                     <div class="mt-10 flex flex-col justify-start items-start sm:flex-row sm:items-center  gap-x-6">
@@ -75,13 +107,13 @@
             </div>
         </div>
 
-        
-        <div class=" w-screen h-full pb-8">
+        <!-- {%if data %}
+        <div class=" w-screen h-full pb-8  ">
             <div class="flex flex-col justify-center items-center text-white">
                 <div class=" ">
 
-                     <div id="dictionaryValues" class="border border-1 border-white max-w-7xl p-8"></div>
-          {%if data %}
+                     <div id="dictionaryValues" class="border border-1 rounded-lg bg-white/10 shadow-3xl ring-1 ring-white/18 max-w-7xl p-8"></div>
+        
         <script>
             function displayDictionaryValues(data) {
                 var dictionaryValuesDiv = document.getElementById("dictionaryValues");
@@ -113,12 +145,92 @@
             }
             displayDictionaryValues({{ data| tojson }});
         </script>
-        {% endif %}
                 </div>
             </div>
         </div>
+        {% endif %} -->
+        {% if not data %}
+        <div class="flex items-center justify-center ">
+            <div>
+                <dotlottie-player
+                src="https://lottie.host/507c0f6c-b253-434a-b87c-1f5c23701c52/iMlr6Z2CtB.lottie" 
+                background="transparent" speed="1" style="width: 360px; height: 300px;" loop autoplay></dotlottie-player>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if data %}
+<div class="w-screen h-full pb-8">
+    <div class="flex flex-col justify-center items-center text-white">
+        <div class="flex gap-x-6 w-[90%]">
+
+            <!-- 👤 Full Name Box -->
+            {% if data.FULL_NAME %}
+            <div class="mb-6 text-start p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl w-1/2">
+                <p class="text-xl mb-1">Hello 👋</p>
+                <p class="text-xl font-semibold">{{ data.FULL_NAME }}</p>
+            </div>
+            {% endif %}
+        
+            <!-- 📦 Score Box -->
+            {% if data.SCORE %}
+            <div class="mb-6 text-center p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl w-1/2">
+                <h2 class="text-xl font-bold mb-2">ATS Score</h2>
+                <p class="text-3xl font-semibold">{{ data.SCORE }}%</p>
+            </div>
+            {% endif %}
+        
+        </div>
+        
+
+        <!-- 🧠 Resume Info Box -->
+        <div id="dictionaryValues" class="border border-1 rounded-xl bg-white/10 shadow-3xl ring-1 ring-white/18 max-w-7xl p-8"></div>
+
+        <script>
+            function displayDictionaryValues(data) {
+                var dictionaryValuesDiv = document.getElementById("dictionaryValues");
+                var html = generateHTML(data);
+                dictionaryValuesDiv.innerHTML = html;
+            }
+
+            function generateHTML(data) {
+                var html = "";
+                for (var key in data) {
+                    if (data.hasOwnProperty(key) && key !== "SCORE" && key !== "FULL_NAME") {  // exclude score
+                        html += "<p><strong>"+key+":</strong> ";
+                        if (typeof data[key] === 'object') {
+                            html += generateHTML(data[key]) + "<br>";
+                        } else {
+                            html += data[key];
+                        }
+                        html += "</p>";
+                    }
+                }
+                return html;
+            }
+
+            displayDictionaryValues({{ data | tojson }});
+        </script>
+    </div>
+</div>
+
+{% endif %}
+
+
+<footer class="bg-white/5 backdrop-blur-md border-t border-white/10 mt-10 text-white">
+    <div class="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row justify-between items-center">
+      <p class="text-sm text-white/70 mb-4 sm:mb-0">© 2025 Resume optimizer. All rights reserved.</p>
+      <p class="text-sm text-white/70 mb-4 sm:mb-0">made with ❤️ by arshad</a>  </p>
+      <div class="flex space-x-4 text-sm">
+        <a href="#" class="hover:underline text-white/90">Privacy Policy</a>
+        <a href="#" class="hover:underline text-white/90">Terms of Service</a>
+        <a href="https://github.com/your-repo" target="_blank" class="hover:underline text-white/90">GitHub</a>
+      </div>
+    </div>
+  </footer>
     </div>
 
-    
+   
+      
 </body>
 </html>
