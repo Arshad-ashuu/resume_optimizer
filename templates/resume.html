@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <form id="resume-form" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="text" name="title" placeholder="Your Title / Role" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="text" name="location" placeholder="Location (City, Country)" required>
+        
+            <input type="url" name="github" placeholder="GitHub Profile URL">
+            <input type="url" name="linkedin" placeholder="LinkedIn Profile URL">
+            <input type="url" name="website" placeholder="Personal Website URL">
+        
+            <textarea name="summary" placeholder="Professional Summary"></textarea>
+            <textarea name="education" placeholder="Education (use double line breaks for multiple entries)"></textarea>
+            <textarea name="skills" placeholder="Technical Skills (use double line breaks for categories)"></textarea>
+            <textarea name="soft_skills" placeholder="Soft Skills (comma-separated or paragraph)"></textarea>
+            <textarea name="additional_skills" placeholder="Additional Skills"></textarea>
+            <textarea name="languages" placeholder="Languages Known"></textarea>
+            <textarea name="certifications" placeholder="Certifications (one per line)"></textarea>
+            <textarea name="experience" placeholder="Work Experience (triple line breaks between jobs)"></textarea>
+            <textarea name="projects" placeholder="Projects (double line breaks between projects)"></textarea>
+        
+            <button type="submit">Preview</button>
+        </form>
+        
+        <div id="preview" contenteditable="true"></div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

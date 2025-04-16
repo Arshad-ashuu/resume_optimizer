@@ -82,7 +82,22 @@ You are given a resume. Your tasks are:
     "line": "Full text of the line with mistake",
     "issue": "What is wrong",
     "suggestion": "What it should be instead"
-    
+
+4. **check for these in resume For each of the following categories, return:
+status: ✅ if present and acceptable, ❌ if missing or needs improvement
+comment: Suggestion or feedback for improvement (if applicable) **
+
+  "ATS_checklist":
+  
+    -skills
+    -contact information
+    -Work experience (if any)
+    -Education (degree names, institutions, graduation years)
+    -Certifications 
+    -Location 
+    -Formatted structure (clear headings like Work Experience, Skills, etc.)
+    -Achievements/metrics (if any)  
+          
 Give the extracted information in json format only
     '''
 
@@ -105,8 +120,9 @@ Give the extracted information in json format only
 
         json_text = json_match.group(0)
         parsed_data = json.loads(json_text)
-        # if 'SCORE' in parsed_data:
-        #     print("📦 ATS Match Score:", parsed_data['SCORE'])
+        # print("📦 ATS :", parsed_data['Mistakes'])
+        # print(" ")
+        # print("📦 ATS :", parsed_data['ATS_checklist'])
 
         return parsed_data
 

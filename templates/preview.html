@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .contact-info {
+            margin-bottom: 15px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .two-column {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .left-column {
+            flex: 0 0 35%;
+            padding-right: 20px;
+        }
+        .right-column {
+            flex: 0 0 65%;
+        }
+        .job {
+            margin-bottom: 15px;
+        }
+        .job-title {
+            font-weight: bold;
+        }
+        .job-company {
+            font-style: italic;
+        }
+        .job-date {
+            color: #666;
+        }
+        .job-description {
+            margin-top: 5px;
+        }
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .skill-category {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .divider {
+            height: 1px;
+            background-color: #ddd;
+            margin: 10px 0;
+        }
+        @media print {
+            body {
+                padding: 0;
+            }
+            .container {
+                border: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="name">{{ data.name|upper }}</div>
+            <div class="title">{{ data.title }}</div>
+            <div class="contact-info">
+                {{ data.phone }} | {{ data.email }} | {{ data.location }}
+                {% if data.github or data.linkedin or data.website %}
+                <br>
+                {% if data.github %}{{ data.github }}{% endif %}
+                {% if data.linkedin %} | {{ data.linkedin }}{% endif %}
+                {% if data.website %} | {{ data.website }}{% endif %}
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="two-column">
+            <div class="left-column">
+                <!-- Summary Section -->
+                <div class="section">
+                    <div class="section-title">SUMMARY</div>
+                    <p>{{ data.summary }}</p>
+                </div>
+                
+                <!-- Education Section -->
+                <div class="section">
+                    <div class="section-title">EDUCATION</div>
+                    {% for edu in data.education.split('\n\n') if edu.strip() %}
+                    <div class="education-item">
+                        <div class="education-school">{{ edu.split('\n')[0] }}</div>
+                        <div class="education-degree">{{ edu.split('\n')[1] if '\n' in edu else '' }}</div>
+                        <div class="education-date">{{ edu.split('\n')[2] if edu.split('\n')|length > 2 else '' }}</div>
+                    </div>
+                    {% if not loop.last %}<div class="divider"></div>{% endif %}
+                    {% endfor %}
+                </div>
+                
+                <!-- Skills Section -->
+                <div class="section">
+                    <div class="section-title">TECHNICAL SKILLS</div>
+                    {% for skill_group in data.skills.split('\n\n') if skill_group.strip() %}
+                    <div class="skill-item">
+                        {% for skill_line in skill_group.split('\n') %}
+                        <div>{{ skill_line }}</div>
+                        {% endfor %}
+                    </div>
+                    {% if not loop.last %}<div class="divider"></div>{% endif %}
+                    {% endfor %}
+                </div>
+                
+                <!-- Soft Skills Section -->
+                {% if data.soft_skills %}
+                <div class="section">
+                    <div class="section-title">SOFT SKILLS</div>
+                    <p>{{ data.soft_skills }}</p>
+                </div>
+                {% endif %}
+                
+                <!-- Additional Skills Section -->
+                {% if data.additional_skills %}
+                <div class="section">
+                    <div class="section-title">ADDITIONAL SKILLS</div>
+                    <p>{{ data.additional_skills }}</p>
+                </div>
+                {% endif %}
+                
+                <!-- Languages Section -->
+                {% if data.languages %}
+                <div class="section">
+                    <div class="section-title">LANGUAGES</div>
+                    <p>{{ data.languages }}</p>
+                </div>
+                {% endif %}
+                
+                <!-- Certifications Section -->
+                {% if data.certifications %}
+                <div class="section">
+                    <div class="section-title">CERTIFICATIONS</div>
+                    {% for cert in data.certifications.split('\n') if cert.strip() %}
+                    <div>{{ cert }}</div>
+                    {% if not loop.last %}<div class="divider"></div>{% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="right-column">
+                <!-- Work Experience Section -->
+                <div class="section">
+                    <div class="section-title">WORK EXPERIENCE</div>
+                    {% for job in data.experience.split('\n\n\n') if job.strip() %}
+                    <div class="job">
+                        {% set job_parts = job.split('\n') %}
+                        <div class="job-title">{{ job_parts[0] }}</div>
+                        <div class="job-company">{{ job_parts[1] if job_parts|length > 1 else '' }}</div>
+                        <div class="job-date">{{ job_parts[2] if job_parts|length > 2 else '' }}</div>
+                        <div class="job-description">
+                            <ul>
+                                {% for description in job_parts[3:] %}
+                                {% if description.strip() %}
+                                <li>{{ description }}</li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% if not loop.last %}<div class="divider"></div>{% endif %}
+                    {% endfor %}
+                </div>
+                
+                <!-- Projects Section (if present) -->
+                {% if data.projects %}
+                <div class="section">
+                    <div class="section-title">PROJECTS</div>
+                    {% for project in data.projects.split('\n\n') if project.strip() %}
+                    <div class="project">
+                        {% set project_parts = project.split('\n') %}
+                        <div class="project-title">{{ project_parts[0] }}</div>
+                        <div class="project-description">
+                            <ul>
+                                {% for description in project_parts[1:] %}
+                                {% if description.strip() %}
+                                <li>{{ description }}</li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% if not loop.last %}<div class="divider"></div>{% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

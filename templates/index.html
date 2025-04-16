@@ -158,15 +158,16 @@
             </div>
         </div>
         {% endif %}
-
         {% if data %}
+
+
 <div class="w-screen h-full pb-8">
-    <div class="flex flex-col justify-center items-center text-white">
-        <div class="flex gap-x-6 w-[90%]">
+    <div class="flex flex-col justify-center items-center text-white flex-wrap lg:flex-nowrap">
+        <div class="flex gap-x-6 w-[90%] flex-wrap lg:flex-nowrap">
 
             <!-- 👤 Full Name Box -->
             {% if data.FULL_NAME %}
-            <div class="mb-6 text-start p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl w-1/2">
+            <div class="mb-6 text-start p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl lg:w-1/2 w-[90%]">
                 <p class="text-xl mb-1">Hello 👋</p>
                 <p class="text-xl font-semibold">{{ data.FULL_NAME }}</p>
             </div>
@@ -181,39 +182,89 @@
             {% endif %}
         
         </div>
-        
 
-        <!-- 🧠 Resume Info Box -->
-        <div id="dictionaryValues" class="border border-1 rounded-xl bg-white/10 shadow-3xl ring-1 ring-white/18 max-w-7xl p-8"></div>
+                <!-- ATS checklist -->
+{% if data.ATS_checklist %}
+<div class="flex flex-wrap justify-start items-start gap-y-4 gap-x-8 lg:max-w-[90%] mx-auto mb-10 w-[90%]">
+    {% for key in [
+        'skills',
+        'Certifications',
+        'contact information',
+        'Formatted structure (clear headings like Work Experience, Skills, etc.)',
+        'Education (degree names, institutions, graduation years)',
+        'Location',
+        'Achievements/metrics (if any)',
+        'Work experience (if any)'
+    ] %}
+        {% if data.ATS_checklist[key] %}
+        <div class="p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl w-full md:w-[48%] lg:w-[30%] min-h-[180px] max-h-[300px] overflow-auto">
+            <p class="text-lg font-semibold capitalize mb-1">{{ key }}:</p>
+            <p class="text-2xl">{{ data.ATS_checklist[key].status }}</p>
+            <p class="text-sm text-gray-300 mt-2 leading-relaxed">— {{ data.ATS_checklist[key].comment }}</p>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
 
-        <script>
-            function displayDictionaryValues(data) {
-                var dictionaryValuesDiv = document.getElementById("dictionaryValues");
-                var html = generateHTML(data);
-                dictionaryValuesDiv.innerHTML = html;
-            }
+             
 
-            function generateHTML(data) {
-                var html = "";
-                for (var key in data) {
-                    if (data.hasOwnProperty(key) && key !== "SCORE" && key !== "FULL_NAME") {  // exclude score
-                        html += "<p><strong>"+key+":</strong> ";
-                        if (typeof data[key] === 'object') {
-                            html += generateHTML(data[key]) + "<br>";
-                        } else {
-                            html += data[key];
-                        }
-                        html += "</p>";
-                    }
-                }
-                return html;
-            }
 
-            displayDictionaryValues({{ data | tojson }});
-        </script>
-    </div>
+    <!-- 🧠 Resume Info Box -->
+<div id="dictionaryValues"
+class=" pr-1 pl-0 w-[90%] lg:max-w-7xl mx-auto  overflow-y-auto min-h-[300px] max-h-[600px]   text-base custom-scrollbar">
 </div>
 
+<style>
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+   width: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+   background: rgba(255, 255, 255, 0.05);
+   border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+   background: rgba(255, 255, 255, 0.3);
+   border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+   background: rgba(145, 143, 143, 0.5);
+}
+</style>
+
+<script>
+function displayDictionaryValues(data) {
+   const dictionaryValuesDiv = document.getElementById("dictionaryValues");
+   const html = generateHTML(data);
+   dictionaryValuesDiv.innerHTML = html;
+}
+
+function generateHTML(data) {
+   let html = "<div class='space-y-4'>";
+   for (let key in data) {
+       if (data.hasOwnProperty(key) && key !== "SCORE" && key !== "FULL_NAME" && key !== "ATS_checklist") {
+           html += "<div class='bg-white/5 p-4 rounded-lg border border-white/20 break-words'>";
+           html += "<p class='font-semibold text-base mb-1'>" + key + ":</p>";
+           if (typeof data[key] === 'object') {
+               html += "<div class='ml-4'>" + generateHTML(data[key]) + "</div>";
+           } else {
+               html += "<p class='text-sm text-gray-200 break-words'>" + data[key] + "</p>";
+           }
+           html += "</div>";
+       }
+   }
+   html += "</div>";
+   return html;
+}
+
+displayDictionaryValues({{ data | tojson }});
+</script>
+</div>        
+</div>
 {% endif %}
 
 
